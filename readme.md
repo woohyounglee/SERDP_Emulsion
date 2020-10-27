@@ -12,5 +12,5 @@
 - seaborn
 
 # Install packages
-- Run "Open in Terminal"
+- Run "Open in Terminal" in PyCharm
 - pip3 install -r requirements.txt
