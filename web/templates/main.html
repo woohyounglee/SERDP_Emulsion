@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--<link rel="stylesheet" type="text/css" href="bootstrap.css">-->
+
+    <!--D3 Chart -->
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://d3js.org/d3.v3.min.js" language="JavaScript"></script>
+    <script src="liquidFillGauge.js" language="JavaScript"></script>
+    <style>
+        html {scroll-behavior: [smooth |auto];}
+        .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
+    </style>
+    <!--D3 Chart: END -->
+
+    <title>Prediction for Bilgewater Emulsion Stability</title>
+</head>
+<body>
+
+<hr>
+
+<ol>
+    <!--<img src="\templates\ucf.PNG", height="150"  >-->
+    <img src="templates/serdp.png", height="150"  >
+
+    <h1 class="display-4">Prediction for Bilgewater Emulsion Stability </h1>
+</ol>
+
+<hr>
+<div class="row">
+    <div class="column">
+
+        <form action='/select_surfactant' method='POST'>
+            <ol>
+                <ul>
+                    <h3>  <li> Surfactant name  </li> </h3>
+                    <span class="input-group-addon"></span>
+                        <p>
+                        <select name='sel_value' class="selectpicker form-control" >
+                            <option value="none" selected disabled hidden>
+                                Select an Option
+                            </option>
+
+                            <option value="AFFF">AFFF</option>
+                            <option value="B&B">B&B</option>
+                            <option value="Blast">Blast</option>
+                            <option value="Calla">Calla</option>
+                            <option value="Powergreen">Powergreen</option>
+                            <option value="PRC">PRC</option>
+                            <option value="SDS">SDS</option>
+                            <option value="Surge">Surge</option>
+                            <option value="Triton-X-100">Triton-X-100</option>
+                            <option value="Type 1">Type 1</option>
+                        </select>
+                        </p>
+                    <ol>
+                        <button type="submit" value="submit" class="btn btn-success" >Submit</button>
+                    </ol>
+                </ul>
+            </ol>
+        </form>
+
+    <!--Show question list -->
+        <form action='/flask_app' method='POST'>
+            <ol>
+                <div class="btn-group btn-group" >
+                <!--<div class="btn-group btn-group-toggle" data-toggle="buttons">>-->
+                    <ul>
+                        {% for question_group in questions %}
+                        <br>
+                        <h3>  <li> {{question_group}} for {{selected_surfactant}}  </li> </h3>
+                            {% set sub_questions = questions[question_group] %}
+
+                            {% for quest in sub_questions %}
+                            <h5> {{quest}} </h5>
+                                <!-- create checkbox -->
+                                {% if questions_type[quest] == 'checkbox' %}
+                                    {% for answr in sub_questions[quest] %}
+                                        <label class="btn btn-outline-primary">
+                                            <input type='checkbox' value='{{answr}}' name='{{quest+"_"+answr}}'  autocomplete="off" />{{answr}}
+                                        </label>
+                                    {% endfor %}
+
+                                <!-- create combobox -->
+                                {% elif questions_type[quest] == 'combobox' %}
+                                    <span class="input-group-addon"></span>
+                                    <select name="{{quest}}" class="selectpicker form-control" >
+                                        {% for answr in sub_questions[quest] %}
+                                            <option value="{{ answr }}">{{ answr }}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                <!-- create editbox -->
+                                {% elif questions_type[quest] == 'editbox' %}
+
+                                    <!-- edit box -->
+                                    {% set default_val = default_values[selected_surfactant][quest] %}
+                                    <input name="{{quest}}" class="form-control" placeholder="Enter a numeric value ({{sub_questions[quest][0]}})" value = '{{default_val}}' >
+
+                                <!-- create radio box -->
+                                {% else %}
+                                    {% for answr in sub_questions[quest] %}
+                                        <label class="btn btn-outline-primary">
+                                            <input type='radio' value='{{answr}}' name='{{quest}}' autocomplete="off" />{{answr}}
+                                        </label>
+                                    {% endfor %}
+                                {% endif %}
+
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <hr>
+                <div>
+                    <ol>
+                        <button type="submit" value="submit" class="btn btn-success" >Submit Answers</button>
+                    </ol>
+                </div>
+            </ol>
+        </form>
+    <!--Show question list - END-->
+    </div>
+
+
+    <div class="row justify-content-md-center">
+
+         <ol>
+             <ul>
+                 <br>
+                 <br>
+        <!--Show the Liquid Fill Gauge  -->
+            <a id="break_point"></a>
+            <div style="text-align:center;">
+                <h3 class="text-center">Oily Value in Regression</h3>
+                <svg id="fillgauge_OV_RE"  height="250"></svg>
+            </div>
+
+            <hr>
+
+            <div style="text-align:center;">
+                <h3 class="text-center">Oily Value in Classification</h3>
+
+                <button type="button" class="btn btn-primary">
+                    <h3>
+                        {% if result_OV_Classifier == 'Low' %}
+                            <p>Only creaming. “Only creaming” represents
+                            <br> the samples with less than 20% oil separation.
+                            </p>
+                        {% elif result_OV_Classifier == 'Mid' %}
+                            <p>Creaming + oil. “Creaming + oil” represents
+                            <br> the sample between 20 – 80 % oil separation.
+                            </p>
+                        {% elif result_OV_Classifier == 'High' %}
+                            <p>Mainly oil. “Mainly oil” represents
+                            <br> the samples with higher than 80% oil separation.
+                            </p>
+                        {% else %}
+                            Result
+                        {% endif %}
+                    </h3>
+                </button>
+            </div>
+
+            <hr>
+
+            <a id="break_point"></a>
+            <div style="text-align:center;">
+                <h3 class="text-center">Turbidity</h3>
+                <svg id="fillgauge_Turbidity"  height="250"></svg>
+            </div>
+
+        <!--Show the Liquid Fill Gauge - END -->
+                 </ul>
+        </ol>
+    </div>
+</div>
+
+<br>
+<br>
+
+<ol>
+    <h1 class="display-4">Collaborator </h1>
+</ol>
+<hr>
+
+<ol>
+     <img src="templates/ucf.png", height="150"  >
+    <h5>Department of Civil, Environmental and Construction Engineering, University of Central Florida, Orlando, FL, USA</h5>
+    <h6>Woo Hyoung Lee, Cheol Young Park, Daniela Diaz, and Kelsey Rodriguez </h6>
+    <hr>
+
+    <h5>Environmental Engineering, Science, and Technology Branch, Naval Surface Warfare Center, Carderock Division, West Bethesda, MD, USA   </h5>
+    <h6>Jared Church, Marjorie R. Willner, and Danielle M. Paynter</h6>
+    <hr>
+
+    <h5>Chemistry Division, United States Naval Research Laboratory, Washington DC, USA</h5>
+    <h6>Jeffrey G. Lundin</h6>
+    <hr>
+
+</ol>
+
+
+<!--Show the Liquid Fill Gauge -->
+<script language="JavaScript">
+    var config1 = liquidFillGaugeDefaultSettings();
+    config1.circleThickness = 0.1;
+    config1.waveAnimateTime = 1000;
+    var gauge1 = loadLiquidFillGauge("fillgauge_OV_RE", {{result_OV_Regressor}}, config1);
+
+    var config3 = liquidFillGaugeDefaultSettings();
+    config3.circleColor = "#D4AB6A";
+    config3.textColor = "#553300";
+    config3.waveTextColor = "#805615";
+    config3.waveColor = "#AA7D39";
+    config3.circleThickness = 0.1;
+    config3.waveAnimateTime = 1000;
+
+    var gauge3 = loadLiquidFillGauge("fillgauge_Turbidity", {{result_Turbidity_Regressor}}, config3);
+
+
+</script>
+<!--Show the Liquid Fill Gauge: END -->
+
+<!--script to go to a position -->
+{% if scroll %}
+<script>
+    document.location.hash = '#' + '{{ scroll }}';
+</script>
+{% endif %}
+<!--script to go to a position: END -->
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
+
