@@ -11,3 +11,6 @@
 - imblearn
 - seaborn
 
+# Install packages
+- Run "Open in Terminal"
+- pip3 install -r requirements.txt
