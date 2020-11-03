@@ -8,7 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!--<link rel="stylesheet" type="text/css" href="bootstrap.css">-->
+    <link rel="stylesheet" type="text/css" href="templates/main.css">
 
     <!--D3 Chart -->
     <meta charset="UTF-8">
@@ -46,7 +46,7 @@
                         <p>
                         <select name='sel_value' class="selectpicker form-control" >
                             <option value="none" selected disabled hidden>
-                                Select an Option
+                                Select a surfactant
                             </option>
 
                             <option value="AFFF">AFFF</option>
@@ -103,7 +103,11 @@
 
                                     <!-- edit box -->
                                     {% set default_val = default_values[selected_surfactant][quest] %}
-                                    <input name="{{quest}}" class="form-control" placeholder="Enter a numeric value ({{sub_questions[quest][0]}})" value = '{{default_val}}' >
+                                        {% if enable_questions[quest] == 'false' %}
+                                            <input name="{{quest}}" readonly="readonly" class="form-control" placeholder="Enter a numeric value ({{sub_questions[quest][0]}})" value = '{{default_val}}' >
+                                        {% else %}
+                                            <input name="{{quest}}" class="form-control" placeholder="Enter a numeric value ({{sub_questions[quest][0]}})" value = '{{default_val}}' >
+                                        {% endif %}
 
                                 <!-- create radio box -->
                                 {% else %}
@@ -139,28 +143,38 @@
         <!--Show the Liquid Fill Gauge  -->
             <a id="break_point"></a>
             <div style="text-align:center;">
-                <h3 class="text-center">Oily Value in Regression</h3>
+                <h3 class="text-center">Oil separation (%) in Regression</h3>
                 <svg id="fillgauge_OV_RE"  height="250"></svg>
+                <div>
+                    <span>
+                        Oily value determines the levels of coalescence stability. <br>
+                        <b>Example meaning of OV</b><br>
+                        100%: 100% (v/v) oil separation. <br>
+                        60%: 60%(v/v) is separated oil layer and 40% (v/v) is creaming layer. <br>
+                        20%: 20%(v/v) is separated oil layer and 80% (v/v) is creaming layer. <br>
+                        0%: no oil separation (100% creaming layers). <br>
+                    </span>
+                </div>
             </div>
 
             <hr>
 
             <div style="text-align:center;">
-                <h3 class="text-center">Oily Value in Classification</h3>
+                <h3 class="text-center">Oil separation (%) in Classification</h3>
 
                 <button type="button" class="btn btn-primary">
                     <h3>
-                        {% if result_OV_Classifier == 'Low' %}
+                        {% if result_OV_Classifier == 'low' %}
                             <p>Only creaming. “Only creaming” represents
-                            <br> the samples with less than 20% oil separation.
+                            <br> the samples with less than 33% oil separation.
                             </p>
-                        {% elif result_OV_Classifier == 'Mid' %}
+                        {% elif result_OV_Classifier == 'mid' %}
                             <p>Creaming + oil. “Creaming + oil” represents
-                            <br> the sample between 20 – 80 % oil separation.
+                            <br> the sample between 33 – 66 % oil separation.
                             </p>
-                        {% elif result_OV_Classifier == 'High' %}
+                        {% elif result_OV_Classifier == 'high' %}
                             <p>Mainly oil. “Mainly oil” represents
-                            <br> the samples with higher than 80% oil separation.
+                            <br> the samples with higher than 66% oil separation.
                             </p>
                         {% else %}
                             Result
@@ -210,20 +224,23 @@
 
 <!--Show the Liquid Fill Gauge -->
 <script language="JavaScript">
-    var config1 = liquidFillGaugeDefaultSettings();
-    config1.circleThickness = 0.1;
-    config1.waveAnimateTime = 1000;
-    var gauge1 = loadLiquidFillGauge("fillgauge_OV_RE", {{result_OV_Regressor}}, config1);
 
-    var config3 = liquidFillGaugeDefaultSettings();
-    config3.circleColor = "#D4AB6A";
-    config3.textColor = "#553300";
-    config3.waveTextColor = "#805615";
-    config3.waveColor = "#AA7D39";
-    config3.circleThickness = 0.1;
-    config3.waveAnimateTime = 1000;
+    var config_ov = liquidFillGaugeDefaultSettings();
+    config_ov.circleThickness = 0.1;
+    config_ov.waveAnimateTime = 1000;
+    var gauge1 = loadLiquidFillGauge("fillgauge_OV_RE", {{result_OV_Regressor}}, config_ov);
 
-    var gauge3 = loadLiquidFillGauge("fillgauge_Turbidity", {{result_Turbidity_Regressor}}, config3);
+    var config_turbidity = liquidFillGaugeDefaultSettings();
+    config_turbidity.circleColor = "#D4AB6A";
+    config_turbidity.textColor = "#553300";
+    config_turbidity.waveTextColor = "#805615";
+    config_turbidity.waveColor = "#AA7D39";
+    config_turbidity.circleThickness = 0.1;
+    config_turbidity.displayPercent = false;
+    config_turbidity.waveHeight = 0;
+    config_turbidity.minValue = 0;
+    config_turbidity.maxValue = 8000;
+    var gauge3 = loadLiquidFillGauge("fillgauge_Turbidity", {{result_Turbidity_Regressor}}, config_turbidity);
 
 
 </script>

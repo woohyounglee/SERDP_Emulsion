@@ -6,10 +6,10 @@ from sklearn.model_selection import KFold
 from statistics import stdev
 from statistics import mean
 import winsound
-from run_experiment import Experiment
+from model_setting import Model_Setting
 
 
-class RegressionExperiment(Experiment):
+class RegressionExperiment(Model_Setting):
     def __init__(self, regression=True):
         super().__init__()
 

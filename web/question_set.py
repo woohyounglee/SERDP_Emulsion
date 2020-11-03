@@ -2,9 +2,7 @@
 
 original_questions = {
      #Format is 'question':[options]
-     'Surfactant information':{
-          # 'Surfactant name': ['AFFF','B&B','Blast','Calla','Powergreen','PRC','SDS','Surge','Triton-X-100','Type 1'],
-          'Surfactant concentration (ppm)': ['0 ~ 26768'],
+     'Fixed surfactant information':{
           'Critical micelle concentration (CMClog) (ppm)': ['87 ~ 3824'],
           'Equilibrium surface tension (ST) above CMC (air) (mN/M)': ['15.2 ~ 35.4'],
           'Equilibrium interfacial tension (IFT) above CMC with NSBM (mN/M)': ['1.3 ~ 14.6'],
@@ -13,8 +11,9 @@ original_questions = {
           'Alkalinity (mg CaCO3/L)': ['0 ~ 6014'],
           "Surfactant's Initial pH at 7CMC": ['6.3 ~ 12.2'],
      },
-     'Environmental factors':{
-          'pH': ['0 ~ 10'],
+     'Editable variables':{
+          'Surfactant concentration (ppm)': ['0 ~ 26768'],
+          'pH': ['4 ~ 12.2'],
           'Suspended solids concentration (ppm)': ['0 ~ 2000'],
           'Salinity (ppm)': ['0 ~ 35000'],
           'Temperature (°C)': ['4 ~ 35'],
@@ -38,9 +37,34 @@ type_questions = {
      'Temperature (°C)': 'editbox',
 }
 
+enable_questions = {
+     'Surfactant name': 'true',
+     'Surfactant concentration (ppm)': 'true',
+     'Critical micelle concentration (CMClog) (ppm)': 'false',
+     'Equilibrium surface tension (ST) above CMC (air) (mN/M)': 'false',
+     'Equilibrium interfacial tension (IFT) above CMC with NSBM (mN/M)': 'false',
+     'Micelle size (nm)': 'false',
+     'Zeta potential (mV)': 'false',
+     'Alkalinity (mg CaCO3/L)': 'false',
+     "Surfactant's Initial pH at 7CMC": 'false',
+     'pH': 'true',
+     'Suspended solids concentration (ppm)': 'true',
+     'Salinity (ppm)': 'true',
+     'Temperature (°C)': 'true',
+}
+
 default_values = {
-     # ['AFFF','B&B','Blast','Calla','Powergreen','PRC','SDS','Surge','Triton-X-100','Type 1']
-     'AFFF': {
+     # ['AFFF','B&B','Blast','Calla','Powergreen','PRC','SDS','Surge',questions_type'Triton-X-100','Type 1']
+     'None': {
+          'Critical micelle concentration (CMClog) (ppm)': 0,
+          'Equilibrium surface tension (ST) above CMC (air) (mN/M)': 0,
+          'Equilibrium interfacial tension (IFT) above CMC with NSBM (mN/M)': 0,
+          'Micelle size (nm)': 0,
+          'Zeta potential (mV)': 0,
+          'Alkalinity (mg CaCO3/L)': 0,
+          "Surfactant's Initial pH at 7CMC": 0,
+     },
+    'AFFF': {
           'Critical micelle concentration (CMClog) (ppm)': 3399,
           'Equilibrium surface tension (ST) above CMC (air) (mN/M)': 15.2,
           'Equilibrium interfacial tension (IFT) above CMC with NSBM (mN/M)': 2.3,

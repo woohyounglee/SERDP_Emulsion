@@ -10,10 +10,10 @@ import winsound
 from sklearn.feature_selection import f_regression
 import matplotlib.pyplot as plt
 import seaborn as sns
-from run_experiment import Experiment
+from model_setting import Model_Setting
 
 
-class SensitivityAnalysisExperiment(Experiment):
+class SensitivityAnalysisExperiment(Model_Setting):
     def __init__(self, regression=True):
         super().__init__()
 

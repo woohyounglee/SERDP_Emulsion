@@ -6,12 +6,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
 import winsound
 from imblearn.over_sampling import SMOTE
-from run_experiment import Experiment
+from model_setting import Model_Setting
 from statistics import stdev
 from statistics import mean
 
 
-class ClassificationExperiment(Experiment):
+class ClassificationExperiment(Model_Setting):
     def __init__(self):
         super().__init__()
 
