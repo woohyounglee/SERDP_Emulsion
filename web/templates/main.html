@@ -4,6 +4,7 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <link rel="icon" href="templates/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
@@ -80,7 +81,7 @@
                             {% set sub_questions = questions[question_group] %}
 
                             {% for quest in sub_questions %}
-                            <h5> {{quest}} </h5>
+                            <h5> {{quest|safe}} </h5>
                                 <!-- create checkbox -->
                                 {% if questions_type[quest] == 'checkbox' %}
                                     {% for answr in sub_questions[quest] %}
@@ -187,7 +188,7 @@
 
             <a id="break_point"></a>
             <div style="text-align:center;">
-                <h3 class="text-center">Turbidity</h3>
+                <h3 class="text-center">Turbidity (NTU)</h3>
                 <svg id="fillgauge_Turbidity"  height="250"></svg>
             </div>
 
