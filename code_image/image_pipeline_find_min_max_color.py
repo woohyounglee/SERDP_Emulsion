@@ -64,7 +64,33 @@ class ImagePipeline():
         c_px = c_px / i
         c_px = np.round(c_px)
         c_px = c_px.tolist()[0]
-        return (float(c_px[0]) + float(c_px[1]) + float(c_px[2]))/3
+        return (c_px[0] + c_px[1] + c_px[2])/3
+
+    def get_min_max_color(self, img):
+        h, w, c = img.shape
+
+        min_avg_px, max_avg_px = 1000, -1000
+        min_px, max_px = None, None
+
+        for x in range(0, w):
+            for y in range(0, h):
+                px = img[y, x]
+                if px[0] == 0 and px[1] == 0 and px[2] == 0:
+                    pass
+                else:
+                    # print(px)
+                    avg_px = (float(px[0]) + float(px[1]) + float(px[2])) / 3
+                    if avg_px < min_avg_px:
+                        min_avg_px = avg_px
+                        min_px = px
+                    if min_avg_px == 0:
+                        print('1')
+
+                    if avg_px > max_avg_px:
+                        max_avg_px = avg_px
+                        max_px = px
+
+        return min_px, max_px
 
     def show_db_img(self, name):
         # Find width and height
@@ -164,17 +190,17 @@ class ImagePipeline():
                 temperature = file_info[4].replace('C', '')
 
             # 3.2 Get start and end color information
-            s_color, e_color = self.get_start_and_end_colors(name, temperature)
+            # s_color, e_color = self.get_start_and_end_colors(name, temperature)
 
             # 3.3 Read an image
             img_file = join(img_path, file)
             img = cv.imread(img_file)
 
             # 3.4 Get colors
-            color = self.get_image_color(img)
+            c_min, c_max = self.get_min_max_color(img)
 
             # 3.5 Calculate OV
-            ov = 1 - (color - s_color)/(e_color - s_color)
+            ov = 1
 
             if ov < 0:
                 ov = 0
