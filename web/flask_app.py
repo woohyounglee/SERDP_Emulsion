@@ -113,10 +113,10 @@ def flask_app_answers():
         ML_Alg_Turbidity_Regressor = pickle.load(fid)
 
     # On web
-    # with open('/home/woohyounglee/mysite/ml_models/ML_Alg_OV (Oily value)_Regressor.pkl', 'rb') as fid:
+    # with open('/home/woohyounglee/mysite/ml_models/ML_Alg_OS (Oil separation)_Regressor.pkl', 'rb') as fid:
     #     ML_Alg_OV_Regressor = pickle.load(fid)
     #
-    # with open('/home/woohyounglee/mysite/ml_models/ML_Alg_OV (Oily value)_Classifier.pkl', 'rb') as fid:
+    # with open('/home/woohyounglee/mysite/ml_models/ML_Alg_OS (Oil separation)_Classifier.pkl', 'rb') as fid:
     #     ML_Alg_OV_Classifier = pickle.load(fid)
     #
     # with open('/home/woohyounglee/mysite/ml_models/ML_Alg_Turbidity_Regressor.pkl', 'rb') as fid:
