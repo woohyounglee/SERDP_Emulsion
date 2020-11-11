@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 from matplotlib.ticker import FormatStrFormatter
 
-# os_df = pd.read_excel(open('../output_for_paper/[9-4-2020] Removal Test.xlsx', 'rb'), sheet_name='OS', index_col=None, header=None)
-os_df = pd.read_excel(open('../output_for_paper/[9-4-2020] Removal Test.xlsx', 'rb'), sheet_name='OV', index_col=None, header=None)
+# os_df = pd.read_excel(open('../output_for_paper/[11-10-2020] Removal Test', 'rb'), sheet_name='OS', index_col=None, header=None)
+os_df = pd.read_excel(open('../output_for_paper/[11-10-2020] Removal Test.xlsx', 'rb'), sheet_name='OV', index_col=None, header=None)
 
 
 # Show data points

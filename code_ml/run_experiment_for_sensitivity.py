@@ -17,9 +17,9 @@ class SensitivityAnalysisExperiment(Model_Setting):
     def __init__(self, regression=True):
         super().__init__()
 
-        # self.cf['targets'] = ['OV (Oily value)']
+        self.cf['targets'] = ['OV (Oily value)']
         # self.cf['targets'] = ['OS (Oil separation)']
-        self.cf['targets'] = ['Turbidity']
+        # self.cf['targets'] = ['Turbidity']
 
         self.size_experiments = 10
         self.ml = RegressionML()
@@ -168,9 +168,9 @@ class SensitivityAnalysisExperiment(Model_Setting):
         self.save_excel_file()
 
 # 1. looks at F-score
-ex = SensitivityAnalysisExperiment().run()
+# ex = SensitivityAnalysisExperiment().run()
 
 # 2. performs one variable removal test
-# SensitivityAnalysisExperiment().run_ml_removing_sensitivity_analysis()
+SensitivityAnalysisExperiment().run_ml_removing_sensitivity_analysis()
 
 winsound.Beep(1000, 440)

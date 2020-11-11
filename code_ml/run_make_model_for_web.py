@@ -22,7 +22,7 @@ class Make_Model(Model_Setting):
                 ml_name = 'RandomForestClassifier'
 
             if self.cf['target'] == 'OV (Oily value)' and self.cf['regression'] is True:
-                ml_name = 'GradientBoostingRegressor'
+                ml_name = 'DecisionTreeRegressor'
 
             # 2. Select variables
             data = excel_data[self.cf['selected_Xs'] + [self.cf['target']]]
@@ -34,6 +34,10 @@ class Make_Model(Model_Setting):
 
             # 4. Separate Xs and y
             df_X, df_y = data[self.cf['selected_Xs']], data[self.cf['target']]
+
+            # 5. Normalization is performed, if regression
+            if self.cf['target'] == 'OS (Oil separation)':
+                df_y = df_y/100
 
             # 7. Convert y to a categorical variable for classification
             df_y = self.convert_to_categorical_variable(df_y)

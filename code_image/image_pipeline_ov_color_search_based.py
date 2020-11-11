@@ -196,18 +196,16 @@ class ImagePipeline():
 
         self.show_db_img(name)
 
-
-img_paths = ['../image_data/Type 1/']
-# img_paths = ['../image_data/AFFF/',
-#              '../image_data/BB/',
-#              '../image_data/Blast-off/',
-#              '../image_data/Calla/',
-#              '../image_data/Power Green/',
-#              '../image_data/PRC/',
-#              '../image_data/SDS/',
-#              '../image_data/Solid surge/',
-#              '../image_data/Triton X-100/',
-#              '../image_data/Type 1/']
+img_paths = ['../image_data/AFFF/',
+             '../image_data/BB/',
+             '../image_data/Blast-off/',
+             '../image_data/Calla/',
+             '../image_data/Power Green/',
+             '../image_data/PRC/',
+             '../image_data/SDS/',
+             '../image_data/Solid surge/',
+             '../image_data/Triton X-100/',
+             '../image_data/Type 1/']
 
 
 ip = ImagePipeline()

@@ -7,16 +7,21 @@ from sklearn import linear_model
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import DotProduct, WhiteKernel
 from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_squared_error
 from sklearn.svm import SVR
 from deep_learning_regressor import DeepLearningRegressor
 from ml import ML
 import pandas as pd
 import datetime
+import math
 
 
 class RegressionML(ML):
     def __init__(self):
         super().__init__()
+        # self.metrics = 'MAE'
+        self.metrics = 'RMSE'
+
         self.regressors = [
             DeepLearningRegressor(type='custom'),
             # linear_model.Ridge(alpha=3.0),  # << This was not used in the paper work
@@ -60,10 +65,14 @@ class RegressionML(ML):
             # score = clf.score(self.X_test, self.y_test)
 
             predicted = clf.predict(self.X_test)
-            mae = mean_absolute_error(self.y_test, predicted)
 
-            print(f'{name} {info}\t', mae)
-            results[name] = mae
+            if self.metrics == 'RMSE':
+                score  = math.sqrt(mean_squared_error(self.y_test, predicted))
+            elif self.metrics == 'MAE':
+                score  = mean_absolute_error(self.y_test, predicted)
+
+            print(f'{name} {info}\t', score )
+            results[name] = score
 
             if file_save is not None:
                 df = pd.DataFrame({'Actual': self.y_test, 'Predicted': predicted.ravel()})

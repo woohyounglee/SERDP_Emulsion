@@ -10,7 +10,7 @@ from datetime import datetime
 class Model_Setting():
     def __init__(self, regression=True):
         self.cf = {}
-        self.cf['file'] = '../data/20200203_UCF_Env_Data_DD_updated_for_paper_9-1-2020.xlsx'
+        self.cf['file'] = '../data/20200203_UCF_Env_Data_DD_updated_for_paper_11-10-2020.xlsx'
         self.cf['sheet'] = 'Image analysis'
         self.cf['targets'] = ['OV (Oily value)', 'OS (Oil separation)', 'Turbidity']
         # self.cf['targets'] = ['Turbidity']

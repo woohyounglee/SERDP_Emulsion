@@ -17,13 +17,16 @@ class RegressionExperiment(Model_Setting):
         # self.cf['targets'] = ['OS (Oil separation)']
         # self.cf['targets'] = ['Turbidity']
 
-        self.normalization = False
-        # self.normalization = True
+        # self.normalization = False
+        self.normalization = True
+
+        # self.metrics = 'MAE'
+        self.metrics = 'RMSE'
 
         self.ml = RegressionML()
         for clf in self.ml.regressors:
             name = type(clf).__name__
-            self.excel[name + '-MAE'] = []
+            self.excel[name + '-Score'] = []
 
     def run_experiment(self, excel_data):
         for target in self.cf['targets']:
@@ -87,7 +90,7 @@ class RegressionExperiment(Model_Setting):
             # 15. Set all results for the excel output
             for clf in self.ml.regressors:
                 name = type(clf).__name__
-                self.excel[name + '-MAE'].append(round(results[name], 4))
+                self.excel[name + '-Score'].append(round(results[name], 4))
                 print(name, round(results[name], 4))
 
             self.excel['Train Size'].append(len(X_train))
