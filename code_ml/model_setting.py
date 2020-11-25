@@ -23,7 +23,6 @@ class Model_Setting():
                                   'Zeta potential (mV)',
                                   'Alkalinity (mg CaCO3/L)',
                                   "Surfactant's Initial pH at 7CMC",
-
                                   'Surfactant concentration (ppm)',
                                   'pH',
                                   'Suspended solids concentration (ppm)',

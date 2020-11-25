@@ -1,6 +1,4 @@
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import MinMaxScaler
 import pickle
 from model_setting import Model_Setting
 
@@ -9,7 +7,7 @@ class Make_Model(Model_Setting):
     def __init__(self, regression=True):
         super().__init__(regression)
 
-    def run_make_model(self, excel_data, surfactant='All'):
+    def run_make_model(self, excel_data):
         for target in self.cf['targets']:
             print('*****************************************************')
             print('target: ', target)
@@ -57,7 +55,7 @@ class Make_Model(Model_Setting):
     def run(self):
         # 1. Load data from xlsx
         excel_data = pd.read_excel(self.cf['file'], self.cf['sheet'])
-        self.run_make_model(excel_data, 'ALL')
+        self.run_make_model(excel_data)
 
 
 ex = Make_Model(regression=True)
