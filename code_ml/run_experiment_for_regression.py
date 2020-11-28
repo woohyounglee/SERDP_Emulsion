@@ -20,8 +20,8 @@ class RegressionExperiment(Model_Setting):
         # self.normalization = False
         self.normalization = True
 
-        # self.metrics = 'MAE'
-        self.metrics = 'RMSE'
+        self.metrics = 'MAE'
+        # self.metrics = 'RMSE'
 
         self.ml = RegressionML()
         for clf in self.ml.regressors:

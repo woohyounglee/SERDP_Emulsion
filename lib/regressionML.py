@@ -19,8 +19,8 @@ import math
 class RegressionML(ML):
     def __init__(self):
         super().__init__()
-        # self.metrics = 'MAE'
-        self.metrics = 'RMSE'
+        self.metrics = 'MAE'
+        # self.metrics = 'RMSE'
 
         self.regressors = [
             DeepLearningRegressor(type='custom'),
