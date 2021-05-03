@@ -24,7 +24,6 @@ class RegressionML(ML):
 
         self.regressors = [
             DeepLearningRegressor(type='custom'),
-            # linear_model.Ridge(alpha=3.0),  # << This was not used in the paper work
             linear_model.BayesianRidge(),
             RandomForestRegressor(n_estimators=100),
             DecisionTreeRegressor(),
