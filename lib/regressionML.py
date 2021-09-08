@@ -9,7 +9,7 @@ from sklearn.gaussian_process.kernels import DotProduct, WhiteKernel
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
 from sklearn.svm import SVR
-from deep_learning_regressor import DeepLearningRegressor
+# from deep_learning_regressor import DeepLearningRegressor
 from ml import ML
 import pandas as pd
 import datetime
@@ -23,7 +23,7 @@ class RegressionML(ML):
         # self.metrics = 'RMSE'
 
         self.regressors = [
-            DeepLearningRegressor(type='custom'),
+            # DeepLearningRegressor(type='custom'),
             linear_model.BayesianRidge(),
             RandomForestRegressor(n_estimators=100),
             DecisionTreeRegressor(),
