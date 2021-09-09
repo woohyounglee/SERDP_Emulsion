@@ -24,17 +24,17 @@ class RegressionML(ML):
 
         self.regressors = [
             # DeepLearningRegressor(type='custom'),
-            linear_model.BayesianRidge(),
+            # linear_model.BayesianRidge(),
             RandomForestRegressor(n_estimators=100),
-            DecisionTreeRegressor(),
-            GradientBoostingRegressor(),
-            MLPRegressor(hidden_layer_sizes=(100,), activation='relu', solver='adam', alpha=0.001, batch_size='auto',
-                learning_rate='constant', learning_rate_init=0.01, power_t=0.5, max_iter=1000, shuffle=True,
-                random_state=0, tol=0.0001, verbose=False, warm_start=False, momentum=0.9, nesterovs_momentum=True,
-                early_stopping=False, validation_fraction=0.1, beta_1=0.9, beta_2=0.999, epsilon=1e-08),
-            LinearRegression(),
-            GaussianProcessRegressor(kernel=DotProduct() + WhiteKernel(), random_state=0),
-            SVR(kernel='rbf', C=100, gamma=0.1, epsilon=.1)
+            # DecisionTreeRegressor(),
+            # GradientBoostingRegressor(),
+            # MLPRegressor(hidden_layer_sizes=(100,), activation='relu', solver='adam', alpha=0.001, batch_size='auto',
+            #     learning_rate='constant', learning_rate_init=0.01, power_t=0.5, max_iter=1000, shuffle=True,
+            #     random_state=0, tol=0.0001, verbose=False, warm_start=False, momentum=0.9, nesterovs_momentum=True,
+            #     early_stopping=False, validation_fraction=0.1, beta_1=0.9, beta_2=0.999, epsilon=1e-08),
+            # LinearRegression(),
+            # GaussianProcessRegressor(kernel=DotProduct() + WhiteKernel(), random_state=0),
+            # SVR(kernel='rbf', C=100, gamma=0.1, epsilon=.1)
         ]
 
     def train_ML(self, ml_name):

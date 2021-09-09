@@ -16,17 +16,22 @@ from sklearn.feature_selection import f_regression, mutual_info_regression
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+
 class Experiment():
-    def __init__(self, regression=True):
+    def __init__(self):
         # self.size_experiments = 2
         self.size_experiments = 10
 
         # Set configuration
         self.cf = {}
-        self.cf['file'] = '../data_090721/New data_9-6-2021.xlsx'
-        self.cf['sheet'] = 'Modified data'
+        self.cf['file'] = '../data_second_experiment/Emulaion_data_9-9-2021.xlsx'
         self.cf['targets'] = ['OS (%)', 'Turbidity']
         self.cf['target'] = None
+
+        self.cf['sheet'] = 'Dataset(1)'
+        # self.cf['sheet'] = 'Dataset(2)'
+        # self.cf['sheet'] = 'Dataset(3)'
+
         self.cf['selected_Xs'] = ['Surfactant name',
                                   'CMC (ppm)',
                                   'Equilibrium ST (mN/M)',
@@ -43,9 +48,11 @@ class Experiment():
                                   'Mix']
 
 
+        # self.cf['regression'] = True  # False means 'classification'
+        self.cf['regression'] = False
+
         # self.cf['all_surfactants'] = [True, False] # False means the each-surfactant experiment
         self.cf['all_surfactants'] = [True]
-        self.cf['regression'] = regression # False means 'classification'
         # self.cf['normalization'] = [True, False] # False means 'non-normalization
         self.cf['normalization'] = [True]
         self.cf['sensitivity analysis'] = False
@@ -114,7 +121,7 @@ class Experiment():
 
     def save_excel_file(self):
         experiment_time = datetime.now().strftime("%m_%d_%Y-%H_%M_%S")
-        excel_file = f'../output/{experiment_time}.xlsx'
+        excel_file = f'../output/{self.cf["sheet"]}_regression[{self.cf["regression"]}]_{experiment_time}.xlsx'
         excel_experiment = SaveResults(excel_file)
         for k, l in self.excel.items():
             excel_experiment.insert(k, l)
@@ -331,8 +338,7 @@ class Experiment():
 
         self.save_excel_file()
 
-# ex = Experiment(regression=True)
-ex = Experiment(regression=False)
+ex = Experiment()
 
 ex.run()
 # ex.run_ml_removing_sensitivity_analysis()

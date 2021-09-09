@@ -21,13 +21,13 @@ class ClassificationML(ML):
     def __init__(self):
         super().__init__()
         self.classifiers = [
-            KNeighborsClassifier(),
-            GaussianProcessClassifier(),
-            DecisionTreeClassifier(),
+            # KNeighborsClassifier(),
+            # GaussianProcessClassifier(),
+            # DecisionTreeClassifier(),
             RandomForestClassifier(),
-            MLPClassifier(),
-            AdaBoostClassifier(),
-            GaussianNB(),
+            # MLPClassifier(),
+            # AdaBoostClassifier(),
+            # GaussianNB(),
         ]
 
     def train_ML(self, ml_name):
